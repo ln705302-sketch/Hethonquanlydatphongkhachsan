@@ -1,0 +1,27 @@
+# Oracle Database 23ai Free cho Sunrise Hotel
+# - PDB SCHOOLDB, schema SUNRISE_HOTEL (dữ liệu chạy web)
+# - schema SUNRISE_TEST (chỉ dùng cho npm test, bị xóa/nạp lại mỗi lần test)
+services:
+  oracle:
+    image: gvenzl/oracle-free:23-slim
+    container_name: sunrise-oracle
+    ports:
+      - "127.0.0.1:1521:1521"
+    environment:
+      ORACLE_PASSWORD: Sunrise_Sys_2026
+      ORACLE_DATABASE: SCHOOLDB
+      APP_USER: SUNRISE_HOTEL
+      APP_USER_PASSWORD: Sunrise_2026
+      TZ: Asia/Ho_Chi_Minh
+    volumes:
+      - sunrise-oracle-data:/opt/oracle/oradata
+      - ./db/init:/container-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+volumes:
+  sunrise-oracle-data:

@@ -1,0 +1,8 @@
+-- Chạy một lần khi container Oracle được tạo (bởi gvenzl/oracle-free, quyền SYSDBA).
+-- Tạo schema SUNRISE_TEST trong PDB SCHOOLDB để chạy test tự động,
+-- tách biệt với dữ liệu thật của SUNRISE_HOTEL.
+ALTER SESSION SET CONTAINER = SCHOOLDB;
+
+CREATE USER SUNRISE_TEST IDENTIFIED BY "Sunrise_2026" QUOTA UNLIMITED ON USERS;
+GRANT CREATE SESSION, CREATE TABLE, CREATE VIEW, CREATE TRIGGER,
+      CREATE SEQUENCE, CREATE PROCEDURE TO SUNRISE_TEST;
